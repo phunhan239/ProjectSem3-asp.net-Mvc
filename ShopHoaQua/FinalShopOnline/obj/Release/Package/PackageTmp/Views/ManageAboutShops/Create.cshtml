@@ -1,0 +1,94 @@
+﻿@model FinalShopOnline.Models.AboutShop
+
+@{
+    ViewBag.Title = "Create";
+}
+@Html.Partial("_GapWithHeaderPartial")
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal col-md-10">
+        <h2>Tạo bài viết mới</h2>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 col-md-offset-2 col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 col-md-offset-2 col-md-10">
+                @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="trove col-md-offset-2">
+            @Html.ActionLink("Trở về", "Index")
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="flat-divider d80px"></div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/summernote/summernote.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#Text').summernote({
+                onImageUpload: function (files, editor, welEditable) {
+                    // upload image to server and create imgNode...
+                    sendFile(files[0], editor, welEditable);
+                }
+            });
+        });
+
+        function sendFile(file, editor, welEditable) {
+            var data = new FormData();
+            data.append("file", file);
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: '@Url.Action("SummernoteUploadImage", "ManageNiceFoods")',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log(data);
+                    editor.insertImage(welEditable, data.Url);
+                }
+            });
+        }
+
+        var edit = function () {
+            $('.click2edit').summernote({ focus: true });
+        };
+
+        var save = function () {
+            var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
+            $('.click2edit').destroy();
+        };
+    </script>
+}
+
+<link href="~/Content/summernote/summernote.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/summernote/summernote-bs3.css" rel="stylesheet" type="text/css" />
+
+
+<style>
+    .note-editor {
+        display: inline-block;
+    }
+</style>

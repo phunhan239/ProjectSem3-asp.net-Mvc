@@ -1,0 +1,130 @@
+﻿@using FinalShopOnline.Models
+@{
+    var db = new ShopOnlineDb();
+    var userComments = db.UserComments
+        .Where(x => x.Status == "ACTIVE").ToList();
+}
+
+@{
+    ViewBag.Title = "Trang chủ";
+}
+
+
+@Html.Partial("_TopSlidePartial")
+
+<div class="row">
+    <div class="flat-divider d60px"></div>
+</div>
+
+<section id="content">
+    <!-- / Bat dau cac kieu san pham -->
+    <div class="section container">
+        @Html.Partial("_SpKhuyenMaiPartial")<!--san pham khuyen mai slider-->
+    </div>
+
+    <div class="row">
+        <div class="flat-divider d90px"></div>
+    </div>
+
+    <div class="section container">
+        @Html.Partial("_SpNoiBatPartial")<!--san pham noi bat slider -->
+    </div>
+
+    <div class="row">
+        <div class="flat-divider d90px"></div>
+    </div>
+
+    <div class="section container">
+        @Html.Partial("_SpBanChayPartial")<!--San pham ban chay slider-->
+    </div>
+
+</section><!-- /Ket thuc cac kieu san pham section-->
+
+<section id="content">
+    <!-- /Bat dau dich vu section-->
+    <div class="blog-wrap">
+        <div class="section container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="icon-box style-side-5 animated box" data-animation-type="bounceInLeft" data-animation-delay="0">
+                        <div class="icon-container">
+                            <span><i class="fa fa-thumbs-up"></i></span>
+                        </div>
+                        <div class="box-content">
+                            <h4 class="box-title">Cám Kết 100% xuất xứ</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="icon-box style-side-5 animated box" data-animation-type="bounceInUp" data-animation-delay="0">
+                        <div class="icon-container">
+                            <span><i class="fa fa-truck"></i></span>
+                        </div>
+                        <div class="box-content">
+                            <h4 class="box-title">Miễn Phí Vận Chuyển</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="icon-box style-side-5 animated box" data-animation-type="bounceInUp" data-animation-delay="0">
+                        <div class="icon-container">
+                            <span><i class="fa fa-money"></i></span>
+                        </div>
+                        <div class="box-content">
+                            <h4 class="box-title">Thanh Toán Tại Nhà</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="icon-box style-side-5 animated box" data-animation-type="bounceInRight" data-animation-delay="0">
+                        <div class="icon-container">
+                            <span><i class="fa fa-refresh"></i></span>
+                        </div>
+                        <div class="box-content">
+                            <h4 class="box-title">Đổi Trả Hàng 100%</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- /ket thuc dich vu section-->
+
+<section class="page-title">
+    <!-- /ket thuc y kien khach hang section-->
+    <div class="parallax has-caption parallax-image2">
+        <div class="overlay v1"></div>
+        <div class="caption-wrapper customer-top">
+            <div class="section container">
+                <div class="box overflow-hidden customer-box">
+                    <h3>Ý kiến khách hàng</h3>
+                    <div class="products post-slider style7 v1 owl-carousel customer-slider" data-itemsPerDisplayWidth="[[0, 1], [480, 1], [768, 2]]" data-items="1">
+                        @foreach (var userComment in userComments)
+                        {
+                            <div class="product">
+                                <div class="product-image">
+                                    <div class="customer-img">
+                                        <img src="@Url.Content(userComment.ImageUrl)" alt="images">
+                                    </div>
+                                </div>
+                                <div class="product-content">
+                                    @Html.Raw(userComment.Comment)
+                                    <div class="user-address">
+                                        <p>@Html.Raw(userComment.Name)</p>
+                                        <p>@Html.Raw(userComment.Address)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- /Ket thuc y kien khach hang section-->
+@*<section id="content" class="hidden">
+        @Html.Partial("_ProductCertificationPartial") /Chung nhan san pham slider
+    </section>*@
+<div class="row">
+    <div class="flat-divider d60px"></div>
+</div>

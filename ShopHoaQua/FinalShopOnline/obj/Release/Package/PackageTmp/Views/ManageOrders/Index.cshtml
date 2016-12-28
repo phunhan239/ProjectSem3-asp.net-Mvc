@@ -1,0 +1,83 @@
+﻿@model IEnumerable<FinalShopOnline.Models.Order>
+@using FinalShopOnline.Models
+@{
+    ViewBag.Title = "Index";
+}
+@Html.Partial("_GapWithHeaderPartial")
+<div class="row">
+    <div class="col-md-4"><h2>Danh sách đơn đặt hàng</h2></div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        @using (Html.BeginForm("Search", "ManageOrders", FormMethod.Post, new { @class = "form-inline" }))
+        {
+            <div class="form-group">
+                <input class="form-control" type="text" id="SearchText" name="SearchText" placeholder="Tìm kiếm">
+            </div>
+
+            <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+
+        }
+    </div>
+</div>
+
+
+<p class="button">
+    @Html.ActionLink("Tạo mới", "Create")
+</p>
+<div class="responsive" style="overflow: scroll">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactPhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td class="button">
+                    <a href="@Url.Action("getDetailOrder", "ManageOrderDetails", new { id = item.Id })">Chi tiết</a> |
+                    @Html.ActionLink("Update", "Edit", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<div class="row">
+    <div class="flat-divider d90px"></div>
+</div>

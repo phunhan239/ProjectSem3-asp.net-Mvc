@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Upload";
+}
+
+@Html.Partial("_GapWithHeaderPartial")
+
+@using (Html.BeginForm("UploadImage", "ManageUserComments", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="form-inline ">
+            <h2>Nhập ảnh sản phẩm.</h2>
+            <hr />
+            <!-- File Upload -->
+            <div class="form-group-v2">
+
+                <input type="file" class="form-control" name="file" />
+
+            </div>
+
+            <div class="form-group-v1">
+                <input type="submit" value="Upload" class="btn btn-primary" />
+            </div>
+        </div>
+
+        <div class="trove">
+            <p>@Html.ActionLink("Trở về", "Index")</p>
+        </div>
+    </div>
+
+    <div class="col-md-3"></div>
+}
+<div class="row">
+    <div class="flat-divider d80px"></div>
+</div>

@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- Theme Styles -->
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css"> 
+    <link rel="stylesheet" href="~/Content/css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/owl-carousel/owl.carousel.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/Content/components/owl-carousel/owl.transitions.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/Content/components/revolution_slider/css/settings.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="~/Content/components/revolution_slider/css/style.css" media="screen" />
+
+    <!-- Updated Styles -->
+    <link rel="stylesheet" href="~/Content/css/updates.css">
+
+    <!-- Main Style -->
+    <link id="main-style" rel="stylesheet" href="~/Content/css/style.css">
+
+    <!-- Responsive Styles -->
+    <link rel="stylesheet" href="~/Content/css/responsive.css">
+
+    <link href="~/Content/css/toastr.min.css" rel="stylesheet" />
+
+    <!--Start of Zopim Live Chat Script-->
+    <script type="text/javascript">
+        window.$zopim || (function (d, s) {
+            var z = $zopim = function (c) { z._.push(c) }, $ = z.s =
+            d.createElement(s), e = d.getElementsByTagName(s)[0]; z.set = function (o) {
+                z.set.
+                _.push(o)
+            }; z._ = []; z.set._ = []; $.async = !0; $.setAttribute("charset", "utf-8");
+            $.src = "//v2.zopim.com/?44b6Cl1tTPGL4HsO6wVqBaBIxxGblm3P"; z.t = +new Date; $.
+            type = "text/javascript"; e.parentNode.insertBefore($, e)
+        })(document, "script");
+    </script>
+    <!--End of Zopim Live Chat Script-->
+
+</head>
+<body class="woocommerce">
+    <div class="page-wrapper">
+        @Html.Partial("_HeaderPartial")
+
+        @RenderBody()
+
+        @Html.Partial("_FooterPartial")
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <!-- Javascript -->
+    <script src="~/Scripts/js/toastr.min.js"></script>
+    <script src="~/Scripts/js/jquery-ui-new.js"></script>
+    <script type="text/javascript" src="~/Scripts/js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/js/jquery.noconflict.js"></script>
+    <script type="text/javascript" src="~/Scripts/js/modernizr.2.8.3.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/js/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/js/jquery-ui.1.11.2.min.js"></script>
+
+    <!-- Magnific Popup core JS file -->
+    <script type="text/javascript" src="~/Content/components/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- parallax -->
+    <script type="text/javascript" src="~/Scripts/js/jquery.stellar.min.js"></script>
+
+    <!-- waypoint -->
+    <script type="text/javascript" src="~/Scripts/js/waypoints.min.js"></script>
+
+    <!-- Owl Carousel -->
+    <script type="text/javascript" src="~/Content/components/owl-carousel/owl.carousel.min.js"></script>
+
+    <!-- load revolution slider scripts -->
+    <script type="text/javascript" src="~/Content/components/revolution_slider/js/jquery.themepunch.tools.min.js"></script>
+    <script type="text/javascript" src="~/Content/components/revolution_slider/js/jquery.themepunch.revolution.min.js"></script>
+
+    <!-- plugins -->
+    <script type="text/javascript" src="~/Scripts/js/jquery.plugins.js"></script>
+
+    <!-- load page Javascript -->
+    <script type="text/javascript" src="~/Scripts/js/main.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/js/revolution-slider.js"></script>
+
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5576659628edfc99"></script>
+
+    <!--Link ajax for add to cart button and shopping cart icon-->
+    <script>
+
+        function showMessage(message) {
+            Command: toastr["success"](message);
+            toastr.options = {
+                "clear": true,
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+
+        }
+        function AddToCart(id, name) {
+            $.post('@Url.Action("AddToCart", "ShoppingCart")', { ProductId: id, Quantity: 1 })
+                .done(function (data) {
+
+                    $.get("@Url.Action("GetCartNumbers", "ShoppingCart")", function (data) {
+                        $("#notification-count").text(data);
+
+                        // NOTIFY
+                        showMessage("01 sản phẩm " + "<b>" + name + "</b>" + " vừa được thêm vào giỏ hàng.");
+
+                        $.get("@Url.Action("GetShoppingCartItems", "ShoppingCart")", function (data) {
+                            var html = "<table class='table'>";
+                            html += "<tr>";
+                            html += "<th>Ảnh</th>";
+                            html += "<th>Tên sản phẩm</th>";
+                            html += "<th>Đơn giá</th>";
+                            html += "<th>Số lượng</th>";
+                            html += "<th>Thành tiền</th>";
+                            html += "</tr>";
+
+                            var total = 0;
+                            jQuery.each(data, function (index, item) {
+
+                                var sum = (item.Price * (100 - item.Discount) / 100) * item.Quantity;
+                                total += sum;
+                                html += "<tr>";
+
+                                html += "<td>";
+                                html += "<img class='img img-thumbnail' style='width: 60px;' src='" + item.ImageUrl.replace('~/', '/') + "'>";
+                                html += "</td>";
+                                html += "<td>" + item.Name + "</td>";
+                                html += "<td>" + item.Price + "<sup>đ</sup></td>";
+                                html += "<td>" + item.Quantity + "</td>";
+                                html += "<td>" + sum + "<sup>đ</sup></td>";
+                                html += "</tr>";
+                                console.log(item.Id + " - " + item.Name);
+                            });
+
+                            html += "<tr>";
+                            html += "<td colspan='4'> <h4>Tổng tiền:</h4></td>";
+                            html += "<td>" + total + "<sup>đ</sup></td>";
+                            html += "</tr>";
+                            html += "</table>";
+
+
+                            $("#notification").html("");
+                            $("#notification").html(html);
+                        });
+                        var html = "<a class='btn btn-danger' href='@Url.Action("CheckOut", "ShoppingCart")'>MUA HÀNG</a>";
+                        html += "<button type='button' class='btn btn-default' data-dismiss='modal'>THOÁT</button>";
+                        $("#modal-footer").html("");
+                        $("#modal-footer").html(html);
+                    });
+                });
+        }
+
+        $("#myModal").modal("show");
+
+    </script>
+
+</body>
+</html>

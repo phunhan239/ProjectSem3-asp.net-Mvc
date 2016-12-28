@@ -1,0 +1,120 @@
+﻿@model FinalShopOnline.Models.Product
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<div class="page-title-container">
+    <div class="parallax has-caption parallax-image2">
+        <div class="overlay v1"></div>
+        <div class="page-title">
+            <div class="container">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="content">
+    <div class="container">
+        <div class="top-name">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="link-right">
+                        <ol class="breadcrumb">
+                            <li><a href="@Url.Action("Index", "Home")">Trang Chủ</a></li>
+                            <li><a>Sản Phẩm</a></li>
+                            <li><a>@Model.Name</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="main" class="col-sm-8 col-md-9">
+                <div class="product type-product">
+                    <div class="row single-product-details">
+                        <div class="product-images col-sm-5 box-lg">
+                            <div id="sync1" class="owl-carousel images">
+                                <div class="item">
+                                    <img src="@Url.Content(Model.ImageUrl)" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="summary entry-summary col-sm-7 box-lg">
+                            <div class="clearfix product-content">
+                                <h2 class="product-title entry-title">@Model.Name</h2>
+                            </div>
+                            @if (Model.Discount > 0)
+                            {
+                                <p class="product-price" style="text-decoration: line-through"> @Model.Price.ToString("N0")<sup>đ</sup></p>
+                                <p class="product-price" style="font-weight: bold">  @((Model.Price * (100 - Model.Discount) / 100).ToString("N0"))<sup>đ</sup></p>
+                            }
+                            else
+                            {
+                                <p class="product-price">@Model.Price.ToString("N0")<sup>đ</sup></p>
+                            }
+                            <div class="row">
+                                <div class="flat-divider d15px"></div>
+                            </div>
+                            <div class="form-inline single-variation-wrap">
+                                @using (Html.BeginForm("AddToCart", "ShoppingCart"))
+                                {
+                                    <div class="qty-wrap">
+                                        <label>Số lượng</label>
+                                        @Html.TextBox("Quantity", "1", new {step="1", value = "1", min ="1", size = "4", title = "Qty", type = "number", name = "Quantity", @class = "form-control input-text qty text" })
+                                        @Html.Hidden("ProductId", Model.Id)
+                                    </div>
+                                    <div class="variation-action">
+                                        <button type="submit" class="btn btn-medium style1">
+                                            <i class="fa fa-shopping-cart"></i> Đặt hàng
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                            <div class="addthis_native_toolbox"></div>
+                            <div class="hostline">
+                                <h2>Hotline:<span>0934580456</span></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="woocommerce-tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="active">
+                                <a href="#tab-description" role="tab" data-toggle="tab">Thông tin sản phẩm</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade active in" id="tab-description">
+                                @Html.Raw(@Model.Description)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="flat-divider d110px"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="sidebar col-sm-4 col-md-3">
+                @Html.Partial("_SpBanChaySideBarPartial")
+
+                <div class="row">
+                    <div class="flat-divider d50px"></div>
+                </div>
+
+                @Html.Partial("_SpNoiBatSideBarPartial")
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="section container">
+                @Html.Partial("_SpKhuyenMaiPartial")
+            </div><!-- /sp khuyen mai -->
+        </div>
+    </div>
+</section>
+<div class="row">
+        <div class="flat-divider d60px"></div>
+    </div>

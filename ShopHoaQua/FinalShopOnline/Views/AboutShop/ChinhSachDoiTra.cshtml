@@ -1,0 +1,43 @@
+﻿@model IEnumerable<FinalShopOnline.Models.AboutShop>
+
+@{
+    ViewBag.Title = "Chính sách đổi trả hàng";
+}
+
+@Html.Partial("_GapWithHeaderPartial")
+
+<section id="content">
+    <div class="container">
+        <div class="top-name">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="link-right">
+                        <ol class="breadcrumb">
+                            <li><a href="@Url.Action("Index", "Home")">Trang Chủ</a></li>
+                            <li><a>Chính sách đổi trả hàng</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="gt-blog">
+                <div class="title-gt">
+                    <div class="span12 post">
+                        <div class="rte">
+                            @Html.Raw(item.Text)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</section>
+
+<div class="row">
+    <div class="flat-divider d90px"></div>
+</div>
+
+

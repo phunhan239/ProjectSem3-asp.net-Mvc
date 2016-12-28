@@ -1,0 +1,18 @@
+
+.testimonials .testimonial {
+  height: 100%;
+}
+
+/* Version 1.1.2 (2015-10-22) */
+#header .logo {
+  background-size: auto 26px;
+}
+
+#header .logo img {
+  width: auto;
+  height: 26px;
+}
+
+#header .logo span {
+  line-height: 26px;
+}

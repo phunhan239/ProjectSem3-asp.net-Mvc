@@ -1,0 +1,86 @@
+﻿@model IEnumerable<FinalShopOnline.Models.OrderDetail>
+@{
+    ViewBag.Title = "Chi tiết giỏ hàng";
+}
+@{ 
+    var customerInfor = Model.FirstOrDefault();
+}
+
+@Html.Partial("_GapWithHeaderPartial")
+
+<h4>Thông tin khách hàng:</h4>
+<ul>
+    <li><strong>Tên: @customerInfor.Order.ContactName</strong></li>
+    <li><strong>Địa chỉ: @customerInfor.Order.ContactAddress</strong></li>
+    <li><strong>Phone: @customerInfor.Order.ContactPhone</strong></li>
+</ul>
+<div class="row">
+    <div class="flat-divider d30px"></div>
+</div>
+<h4>Thông tin chi tiết giỏ hàng:</h4>
+<div class="responsive" style="overflow: scroll">
+    <div style="height: 500px; overflow-y: auto; color: black">
+        <table class="table table-condensed table-bordered table-hover">
+            <tr>
+                <th style="text-align:center">Ảnh sản phẩm</th>
+                <th style="text-align:center">Tên sản phẩm</th>
+                <th style="text-align:center">Số lượng</th>
+                <th style="text-align:center">Đơn giá</th>
+                <th style="text-align:center">Thành tiền</th>
+            </tr>
+            @{
+                decimal total = 0;
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td align="center">
+                        @if (string.IsNullOrEmpty(item.Product.ImageUrl) == false)
+                        {
+                            <img src="@Url.Content(item.Product.ImageUrl)" style="width: 80px" />
+                        }
+
+                    </td>
+                    <td align="center">
+                        @item.Product.Name
+                    </td>
+                    <td align="center">
+                        @item.Quantity.ToString("0")
+                    </td>
+                    <td align="center">
+                        @item.Price.ToString("N0")<sup>đ</sup>
+                    </td>
+                    <td align="center">
+                        @{
+                            var quantity = item.Quantity;
+                            var price = item.Price;
+
+                            var sum = quantity * price;
+                            total = total + sum;
+                        }
+
+                        @sum.ToString("N0")<sup>đ</sup>
+                    </td>
+                </tr>
+
+                            }
+            <tr>
+                <td colspan="4" align="center">
+                    <h5><strong>Tổng tiền:</strong></h5>
+                </td>
+                <td align="center">
+                    <h5><strong>@total.ToString("N0")<sup>đ</sup></strong></h5>
+                </td>
+            </tr>
+        </table>
+        <div class="row">
+            <div class="flat-divider d30px"></div>
+        </div>
+        <div class="button">
+            <p>@Html.ActionLink("Trở về", "Index", "ManageOrders")</p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="flat-divider d90px"></div>
+</div>

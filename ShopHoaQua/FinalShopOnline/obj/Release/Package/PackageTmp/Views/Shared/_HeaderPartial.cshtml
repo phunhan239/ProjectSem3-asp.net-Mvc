@@ -1,0 +1,210 @@
+﻿@using FinalShopOnline.Models
+@{
+    var db = new ShopOnlineDb();
+    var categories = db.Categories
+    .Where(x => x.Status == "ACTIVE")
+    .OrderBy(x => x.SortOrder).ToList();
+}
+
+<header id="header" class="header-color-white">
+    <div class="container">
+        <div class="header-inner">
+            @*<div class="branding">
+                    <h1 class="logo">
+                        <a href="index.html"><img src="images/logo.png" alt=""><span>FVF</span></a>
+                    </h1>
+                </div>*@
+            <nav id="nav">
+                <ul class="header-top-nav">
+                    <li class="mini-cart menu-item-has-children">
+                        @Html.Partial("_ShoppingCartIconPartial")
+                    </li>
+                    <li class="mini-search">
+                        <a href="#"><i class="fa fa-search has-circle"></i></a>
+                        <div class="main-nav-search-form">
+                            <div>
+                                <div class="search-box">
+                                    @using (Html.BeginForm("Search", "Product", FormMethod.Post))
+                                    {
+                                        <input type="text" id="SearchText" name="SearchText" placeholder="Tìm kiếm">
+                                        <button type="submit"><i class="fa fa-search"></i></button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="visible-mobile">
+                        <a href="#mobile-nav-wrapper" data-toggle="collapse"><i class="fa fa-bars has-circle"></i></a>
+                    </li>
+                </ul>
+                <ul id="main-nav" class="hidden-mobile">
+                    <li class="menu-item-has-children">
+                        <a class="cool-link item-navigation" href="@Url.Action("Index", "Home")">Trang Chủ</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a class="cool-link item-navigation">Sản Phẩm</a>
+                        <ul class="sub-nav">
+                            <li class="menu-item-has-children">
+                                <a class="cool-link v1" href="@Url.Action("SanphamnoibatGrid", "Product")">Sản phẩm nổi bật</a>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a class="cool-link v1" href="@Url.Action("SanphambanchayGrid", "Product")">Sản phẩm bán chạy</a>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a class="cool-link v1" href="@Url.Action("SanphamkhuyenmaiGrid", "Product")">Sản phẩm khuyến mãi</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a class="cool-link item-navigation">Tin Tức</a>
+                        <ul class="sub-nav">
+                            <li class="menu-item-has-children">
+                                <a class="cool-link v1" href="@Url.Action("Index", "NicheInformation")">Tin Sạch</a>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a class="cool-link v1" href="@Url.Action("Index", "NiceFood")">Món Ngon Mỗi Ngày</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a class="cool-link item-navigation" href="@Url.Action("IntroduceStore", "AboutShop")">Giới Thiệu</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a class="cool-link item-navigation" href="@Url.Action("Contact", "Home")">Liên Hệ</a>
+                    </li>
+                    @if (User.IsInRole("Admins"))
+                    {
+                        <li class="menu-item-has-children">
+                            <a class="cool-link item-navigation">Quản trị</a>
+                            <ul class="sub-nav">
+                                <li class="menu-item-has-children">
+                                    <a class="cool-link v1" href="@Url.Action("Index", "ManageOrders")"> Đơn đặt hàng</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a class="cool-link v1" href="@Url.Action("Index", "ManageProducts")">Sản phẩm</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a class="cool-link v1" href="@Url.Action("Index", "ManageNiceFoods")">Mục tin món ngon mỗi ngày</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a class="cool-link v1" href="@Url.Action("Index", "ManageNicheInformations")">Mục tin sạch</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a class="cool-link v1" href="@Url.Action("Index", "ManageUserComments")">Ý kiến khách hàng</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a class="cool-link v1" href="@Url.Action("Index", "ManageCategories")">Loại sản phẩm</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a class="cool-link v1" href="@Url.Action("Index", "ManageSlideImages")">Hình ảnh</a>
+                                </li>
+                                <li class="menu-item-has-children divider" role="separator">
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a class="cool-link v1" href="@Url.Action("Index", "ManageUsers")">Quản lý người dùng</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a class="cool-link v1" href="@Url.Action("Index", "ManageRoles")">Quản lý quyền truy cập</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a class="cool-link v1" href="@Url.Action("Index", "ManageAboutShops")"> Thông tin chung</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu-item-has-children">
+                            @Html.Partial("_LoginPartial")
+                        </li>
+                    }
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="mobile-nav-wrapper collapse visible-mobile" id="mobile-nav-wrapper">
+        <ul class="mobile-nav">
+            <li class="menu-item-has-children">
+                <a class="item-navigation" href="@Url.Action("Index", "Home")">Trang Chủ</a>
+            </li>
+            <li class="menu-item-has-children">
+                <span class="open-subnav"></span>
+                <a class="item-navigation" href="@Url.Action("Index", "Product")">Sản Phẩm</a>
+                <ul class="sub-nav">
+                    <li class="menu-item-has-children">
+                        <a class="cool-link v1" href="@Url.Action("SanphamnoibatGrid", "Product")">Sản phẩm nổi bật</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a class="cool-link v1" href="@Url.Action("SanphambanchayGrid", "Product")">Sản phẩm bán chạy</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a class="cool-link v1" href="@Url.Action("SanphamkhuyenmaiGrid", "Product")">Sản phẩm khuyến mãi</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-item-has-children">
+                <span class="open-subnav"></span>
+                <a class="item-navigation">Tin Tức</a>
+                <ul class="sub-nav">
+                    <li class="menu-item-has-children">
+                        <a href="@Url.Action("Index", "NicheInformation")">Tin Sạch</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a href="@Url.Action("Index", "NiceFood")">Món Ngon Mỗi Ngày</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-item-has-children">
+                <a class="item-navigation" href="@Url.Action("IntroduceStore", "AboutShop")">Giới Thiệu</a>
+            </li>
+            <li class="menu-item-has-children">
+                <a class="item-navigation" href="@Url.Action("Contact", "Home")">Liên Hệ</a>
+            </li>
+            @if (User.IsInRole("Admins"))
+            {
+                <li class="menu-item-has-children">
+                    <span class="open-subnav"></span>
+                    <a class="item-navigation">Quản trị</a>
+                    <ul class="sub-nav">
+                        <li class="menu-item-has-children">
+                            <a class="cool-link v1" href="@Url.Action("Index", "ManageOrders")"> Đơn đặt hàng</a>
+                        </li>
+
+                        <li class="menu-item-has-children">
+                            <a class="cool-link v1" href="@Url.Action("Index", "ManageProducts")">Sản phẩm</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a class="cool-link v1" href="@Url.Action("Index", "ManageNiceFoods")">Mục tin món ngon mỗi ngày</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a class="cool-link v1" href="@Url.Action("Index", "ManageNicheInformations")">Mục tin sạch</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a class="cool-link v1" href="@Url.Action("Index", "ManageCategories")">Loại sản phẩm</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a class="cool-link v1" href="@Url.Action("Index", "ManageUserComments")">Ý kiến khách hàng</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a class="cool-link v1" href="@Url.Action("Index", "ManageSlideImages")">Hình ảnh</a>
+                        </li>
+
+                        <li class="menu-item-has-children divider" role="separator">
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a class="cool-link v1" href="@Url.Action("Index", "ManageUsers")">Quản lý người dùng</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a class="cool-link v1" href="@Url.Action("Index", "ManageRoles")">Quản lý quyền truy cập</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a class="cool-link v1" href="@Url.Action("Index", "ManageAboutShops")"> Thông tin chung</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item-has-children">
+                    @Html.Partial("_LoginPartial")
+                </li>
+            }
+        </ul>
+    </div>
+</header>
+

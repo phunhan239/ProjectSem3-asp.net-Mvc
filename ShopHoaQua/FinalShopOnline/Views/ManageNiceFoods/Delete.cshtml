@@ -1,0 +1,55 @@
+﻿@model FinalShopOnline.Models.NiceFood
+
+@{
+    ViewBag.Title = "Xóa bài viết";
+}
+@Html.Partial("_GapWithHeaderPartial")
+<div>
+    <h2>Xóa bài viết</h2>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HeadContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HeadContent)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BlogContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BlogContent)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="trove form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Trở về", "Index")
+        </div>
+    }
+</div>
+<div class="row">
+    <div class="flat-divider d80px"></div>
+</div>

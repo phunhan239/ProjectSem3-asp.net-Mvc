@@ -1,0 +1,55 @@
+﻿@model FinalShopOnline.Models.SlideImage
+
+@{
+    ViewBag.Title = "Delete";
+}
+@Html.Partial("_GapWithHeaderPartial")
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-3">
+        <h2>Xóa ảnh</h2>
+        <hr />
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DisplayPosition)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DisplayPosition)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SortOrder)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SortOrder)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="trove form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> 
+                @Html.ActionLink("Trở về", "Index")
+            </div>
+        }
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<div class="row">
+    <div class="flat-divider d80px"></div>
+</div>

@@ -1,0 +1,45 @@
+﻿@using FinalShopOnline.Models
+@{
+    var db = new ShopOnlineDb();
+    var products = db.Products
+        .Where(x => x.Status == "ACTIVE" && x.DisplayPosition == "SAN PHAM NOI BAT")
+        .OrderBy(x => x.SortOrder).ToList();
+}
+
+<div class="box overflow-hidden">
+    <h3 class="font-normal">Sản Phẩm Nổi Bật</h3>
+    <div class="products post-slider style7 owl-carousel" data-itemsPerDisplayWidth="[[0, 1], [480, 1], [768, 2], [992, 3], [1200, 4]]" data-items="4">
+        @foreach (var product in products)
+        {
+            <div class="product-thumbnail-outer">
+                <div class="product-thumbnail-outer-inner">
+                    <div class="product">
+                        <a href="@Url.Action("Details", "Product", new { Id = product.Id})">
+                            <div class="first-img">
+                                <img src="@Url.Content(product.ImageUrl)" alt="images">
+                            </div>
+                        </a>
+                        <div class="product-content">
+                            <h4 class="product-title"><a href="@Url.Action("Details", "Product", new { Id = product.Id })">@product.Name</a></h4>
+                            <p class="product-price">@product.Price.ToString("N0")<sup>đ</sup></p>
+                        </div>
+                        <div class="product-action">
+                            <div class="box bg-2">
+                                @using (Html.BeginForm("AddToCart", "ShoppingCart"))
+                                {
+                                    @Html.Hidden("ProductId", product.Id)
+                                    @Html.Hidden("Quantity", "1", new { style = "width: 80px", @class = "form-control" })
+                                }
+                                <button onclick="AddToCart(@product.Id, '@product.Name')" type="submit" class="button button--isi button--border-thin button--size-s button--round-s shopping"><p>Đặt hàng</p></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+

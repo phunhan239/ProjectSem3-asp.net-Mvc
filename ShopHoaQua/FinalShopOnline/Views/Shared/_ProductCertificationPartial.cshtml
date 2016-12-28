@@ -1,0 +1,86 @@
+﻿@using FinalShopOnline.Models
+@{
+    var db = new ShopOnlineDb();
+    var productCertifications = db.SlideImages
+        .Where(x => x.Status == "ACTIVE" && x.DisplayPosition == "PRODUCT CERTIFICATION STYLE")
+        .OrderBy(x => x.SortOrder).ToList();
+}
+<div class="section container">
+    <div class="box overflow-hidden">
+        <h3 class="font-normal">Chứng Nhận Sản Phẩm An Toàn</h3>
+        <div class="products post-slider style7 owl-carousel" data-itemsPerDisplayWidth="[[0, 1], [480, 1], [768, 2], [992, 4], [1200, 6]]" data-items="4">
+            @foreach (var item in productCertifications)
+            {
+                <div class="product">
+                    <div class="first-img product-image">
+                        <img src="@Url.Content(item.ImageUrl)" alt="product certification">
+                    </div>
+                </div>
+            }
+            
+            @*<div class="product">
+                <a href="#" class="product-image">
+                    <div class="first-img">
+                        <img src="" alt="images">
+                    </div>
+                </a>
+            </div>
+            <div class="product">
+                <a href="#" class="product-image">
+                    <div class="first-img">
+                        <img src="" alt="images">
+                    </div>
+                </a>
+            </div>
+            <div class="product">
+                <a href="#" class="product-image">
+                    <div class="first-img">
+                        <img src="" alt="images">
+                    </div>
+                </a>
+            </div>
+            <div class="product">
+                <a href="#" class="product-image">
+                    <div class="first-img">
+                        <img src="" alt="images">
+                    </div>
+                </a>
+            </div>
+            <div class="product">
+                <a href="#" class="product-image">
+                    <div class="first-img">
+                        <img src="" alt="images">
+                    </div>
+                </a>
+            </div>
+            <div class="product">
+                <a href="#" class="product-image">
+                    <div class="first-img">
+                        <img src="" alt="images">
+                    </div>
+                </a>
+            </div>
+            <div class="product">
+                <a href="#" class="product-image">
+                    <div class="first-img">
+                        <img src="" alt="images">
+                    </div>
+                </a>
+            </div>
+            <div class="product">
+                <a href="#" class="product-image">
+                    <div class="first-img">
+                        <img src="" alt="images">
+                    </div>
+                </a>
+            </div>
+            <div class="product">
+                <a href="#" class="product-image">
+                    <div class="first-img">
+                        <img src="" alt="images">
+                    </div>
+                </a>
+            </div>*@
+        </div>
+    </div>
+</div>

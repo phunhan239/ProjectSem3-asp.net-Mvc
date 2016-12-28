@@ -1,0 +1,57 @@
+﻿@model IEnumerable<FinalShopOnline.Models.SlideImage>
+
+@{
+    ViewBag.Title = "Index";
+}
+@Html.Partial("_GapWithHeaderPartial")
+<h2>Quản lý ảnh cho slide và chứng nhận sản phẩm</h2>
+
+<p class="button">
+    @Html.ActionLink("Tạo mới", "Create")
+</p>
+<div class="responsive" style="overflow: scroll">
+    <table class="table">
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisplayPosition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SortOrder)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @if (string.IsNullOrEmpty(item.ImageUrl) == false)
+                {
+                <img src="@Url.Content(item.ImageUrl)" style="width: 80px" />
+                }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisplayPosition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SortOrder)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Upload", "UploadImage", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+    }
+
+    </table>
+</div>

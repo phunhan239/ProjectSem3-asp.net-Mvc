@@ -1,0 +1,72 @@
+﻿
+@model IEnumerable<FinalShopOnline.Models.Product>
+
+@{
+    ViewBag.Title = "Tìm kiếm";
+}
+
+
+<div class="page-title-container">
+    <div class="parallax has-caption parallax-image2">
+        <div class="overlay v1"></div>
+        <div class="page-title">
+            <div class="container">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="flat-divider d20px"></div>
+</div>
+<h2>Kết quả tìm kiếm: </h2>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div id="main" class="col-sm-8 col-md-12">
+                <ul class="products row add-clearfix">
+                    @foreach (var product in Model)
+                    {
+                        <li class="product col-sms-6 col-sm-6 col-lg-3 box">
+                            <div class="product-thumbnail-outer">
+                                <div class="product-thumbnail-outer-inner style-v1">
+                                    <div class="product">
+                                        <a href="@Url.Action("Details", "Product", new {Id = product.Id})" class="product-image">
+                                            <div class="first-img">
+                                                @if (string.IsNullOrEmpty(product.ImageUrl) == false)
+                                                {
+                                                    <img src="@Url.Content(product.ImageUrl)" alt="images">
+                                                }
+                                            </div>
+                                        </a>
+                                        <div class="product-content">
+                                            <h4 class="product-title"><a href="@Url.Action("Details", "Product", new { Id = product.Id })">@product.Name</a></h4>
+                                            @if (product.Discount > 0)
+                                            {
+                                                <p class="product-price" style="text-decoration: line-through"> @product.Price.ToString("N0")<sup>đ</sup></p>
+                                                <p class="product-price" style="font-weight: bold">  @((product.Price * (100 - product.Discount) / 100).ToString("N0"))<sup>đ</sup></p>
+                                            }
+                                            else
+                                            {
+                                                <p class="product-price">@product.Price.ToString("N0")<sup>đ</sup></p>
+                                            }
+                                        </div>
+                                        <div class="product-action">
+                                            <div class="box bg-2">
+                                                @using (Html.BeginForm("AddToCart", "ShoppingCart"))
+                                                {
+                                                    @Html.Hidden("ProductId", product.Id)
+                                                    @Html.Hidden("Quantity", "1", new { style = "width: 80px", @class = "form-control" })
+                                                }
+                                                <button onclick="AddToCart(@product.Id, '@product.Name')" type="submit" class="button button--isi button--border-thin button--size-s button--round-s shopping"><p>Đặt hàng</p></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

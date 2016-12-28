@@ -1,0 +1,26 @@
+﻿@using FinalShopOnline.Models
+@{
+    var db = new ShopOnlineDb();
+    var slideImages = db.SlideImages
+        .Where(x => x.Status == "ACTIVE" && x.DisplayPosition == "SLIDE STYLE")
+        .OrderBy(x => x.SortOrder).ToList();
+}
+
+<div id="slideshow">
+    <div class="revolution-slider">
+        <ul>
+            @{ 
+                var i = 0;
+                string[] transitionStyle = new string[] { "zoomin", "zoomout", "slidedown" };
+            }
+            @foreach (var slideImage in slideImages)
+            {
+                <li data-transition="@transitionStyle[i]" data-slotamount="7" data-masterspeed="1500">
+                    <!-- MAIN IMAGE -->
+                    <img src="@Url.Content(slideImage.ImageUrl)" alt="images">
+                </li>
+                i++;
+            }
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+﻿@model FinalShopOnline.Models.UserComment
+
+@{
+    ViewBag.Title = "Edit";
+}
+@Html.Partial("_GapWithHeaderPartial")
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.Hidden("ImageUrl", Model.ImageUrl)
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal col-md-10">
+        <h4>SlideImage</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-offset-2 col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-offset-2 col-md-10">
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-offset-2 col-md-10">
+                @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-offset-2 col-md-10">
+                @Html.DropDownListFor(model => model.Status, null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Trở về", "Index")
+</div>
+<div class="row">
+    <div class="flat-divider d80px"></div>
+</div>
+
+
+@section scripts {
+<script src="~/Scripts/summernote/summernote.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#Comment').summernote({
+                onImageUpload: function (files, editor, welEditable) {
+                    // upload image to server and create imgNode...
+                    sendFile(files[0], editor, welEditable);
+                }
+            });
+        });
+
+        function sendFile(file, editor, welEditable) {
+            var data = new FormData();
+            data.append("file", file);
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: '@Url.Action("SummernoteUploadImage", "ManageUserComments")',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log(data);
+                    editor.insertImage(welEditable, data.Url);
+                }
+            });
+        }
+
+        var edit = function () {
+            $('.click2edit').summernote({ focus: true });
+        };
+
+        var save = function () {
+            var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
+            $('.click2edit').destroy();
+        };
+    </script>
+}
+
+<link href="~/Content/summernote/summernote.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/summernote/summernote-bs3.css" rel="stylesheet" type="text/css" />
+
+
+<style>
+    .note-editor {
+        display: inline-block;
+    }
+</style>

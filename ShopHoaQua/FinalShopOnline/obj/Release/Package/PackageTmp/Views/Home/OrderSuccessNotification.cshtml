@@ -1,0 +1,37 @@
+﻿@Html.Partial("_GapWithHeaderPartial")
+<div class="row">
+    <div class="flat-divider d90px"></div>
+</div>
+<div class="row">
+    <div class="flat-divider d90px"></div>
+</div>
+<div class="row">
+    <div class="flat-divider d90px"></div>
+</div>
+<div class="row">
+    <div class="flat-divider d90px"></div>
+</div>
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header danger">
+                    <button type="button" hidden class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title titlegiohang">Thông báo</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="notify_content">Cửa hàng đã nhận được thông tin đặt hàng của quý khách.<br />Chúng tôi sẽ liên hệ với quý khách để xác nhận thông tin đặt hàng trong thời gian sớm nhất.<br /><br />Trân trọng cảm ơn !</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger" href="@Url.Action("Index", "Home")">Ok</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

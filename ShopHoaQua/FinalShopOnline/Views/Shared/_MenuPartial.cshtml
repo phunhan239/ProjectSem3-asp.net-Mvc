@@ -1,0 +1,37 @@
+﻿@using FinalShopOnline.Models
+
+@{
+    var db = new ShopOnlineDb();
+    var categories = db.Categories.Where(x => x.Status == "ACTIVE").OrderBy(x => x.SortOrder).ToList();
+    var level1_categories = categories.Where(x => x.ParentId == 0);
+}
+
+<div class="sidebar col-sm-4 col-md-3">
+    <div class="widget box">
+        <h4>Danh mục sản phẩm</h4>
+        <ul class="filter-categories panel-group">
+            @foreach (var c1 in level1_categories)
+            {
+                <li class="category-has-children">
+                    <a href="@Url.Action("DisplayByCategory","Product",new {categoryId = c1.Id})">@c1.Name</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="flat-divider d20px"></div>
+    </div>
+
+    @*San pham noi bat side bar*@
+    @Html.Partial("_SpBanChaySideBarPartial")
+
+    <div class="row">
+        <div class="flat-divider d20px"></div>
+    </div>
+
+    @*San pham ban chay side bar*@
+    @Html.Partial("_SpNoiBatSideBarPartial")
+
+</div>
+

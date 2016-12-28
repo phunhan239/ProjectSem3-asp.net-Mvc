@@ -1,0 +1,59 @@
+﻿@model IEnumerable<FinalShopOnline.Models.NicheInformation>
+
+@{
+    ViewBag.Title = "Tin tức";
+}
+@Html.Partial("_GapWithHeaderPartial")
+<h2>Danh sách bài viết mục tin sạch</h2>
+
+<p class="button">
+    @Html.ActionLink("Tạo bài viết", "Create")
+</p>
+<div class="responsive" style="overflow: scroll">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HeadContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BlogContent)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model) {
+    <tr>
+        <td>
+            @if (string.IsNullOrEmpty(item.ImageUrl) == false)
+                {
+            <img src="@Url.Content(item.ImageUrl)" style="width: 80px" />
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HeadContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BlogContent)
+        </td>
+        <td>
+            @Html.ActionLink("Cập nhật", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Upload Image", "UploadImage", new { id = item.Id }) |
+            @Html.ActionLink("Xóa bài", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+    </table>
+</div>
+    <div class="row">
+        <div class="flat-divider d80px"></div>
+    </div>

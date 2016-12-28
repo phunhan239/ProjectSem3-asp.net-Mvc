@@ -1,0 +1,103 @@
+﻿<style>
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+</style>
+@using FinalShopOnline.Models
+
+@{
+    var shoppingCart = (ShoppingCart)Session["ShoppingCart"];
+    var count = 0;
+    if (shoppingCart != null)
+    {
+        count = shoppingCart.ShoppingCartItems.Count;
+    }
+}
+
+<a href="#" data-toggle="modal" data-target="#shoppingcart-modal">
+    <i class="fa fa-shopping-cart has-circle"></i>
+    <span id="notification-count" class="badge">
+        @count
+    </span>
+</a>
+
+<!-- Modal -->
+
+    <div class="modal fade" id="shoppingcart-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title titlegiohang" id="myModalLabel">Giỏ hàng</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="notification" style="height: 300px; overflow-y: auto; color: black">
+                        @if (shoppingCart != null)
+                        {
+                            <table class="table table-condensed table-bordered table-hover">
+                                <tr>
+                                    <th>Ảnh sản phẩm</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Đơn giá</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                                @{
+                                    decimal total = 0;
+                                }
+                                @foreach (var shoppingCartItem in shoppingCart.ShoppingCartItems)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(shoppingCartItem.Item.ImageUrl) == false)
+                                            {
+                                                <img src="@Url.Content(shoppingCartItem.Item.ImageUrl)" style="width: 80px" />
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @shoppingCartItem.Item.Name
+                                        </td>
+                                        <td>
+                                            @shoppingCartItem.Quantity
+                                        </td>
+                                        <td>
+                                            @shoppingCartItem.Item.Price.ToString("N0")<sup>đ</sup>
+                                        </td>
+                                        <td>
+                                            @{
+                                                var quantity = shoppingCartItem.Quantity;
+                                                var price = shoppingCartItem.Item.Price;
+                                                var discount = shoppingCartItem.Item.Discount;
+                                                var sum = (quantity * price) * ((100 - discount)/100);
+                                                total = total + sum;
+                                            }
+
+                                            @sum.ToString("N0")<sup>đ</sup>
+                                        </td>
+                                    </tr>
+
+                                                }
+                                <tr>
+                                    <td colspan="4">
+                                        <h5><strong>Tổng tiền:</strong></h5>
+                                    </td>
+                                    <td>
+                                        <h5><strong>@total.ToString("N0")<sup>đ</sup></strong></h5>
+                                    </td>
+                                </tr>
+                            </table>
+                                                }
+                    </div>
+                </div>
+                <div class="modal-footer" id="modal-footer">
+                    @if (shoppingCart != null)
+                {
+                        <a class="btn btn-danger" href="@Url.Action("CheckOut", "ShoppingCart")">Mua hàng</a>
+                    }
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
